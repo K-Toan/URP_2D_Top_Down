@@ -5,10 +5,11 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Move")]
-    public float MoveSpeed = 6f;
-    public float Acceleration = 10f;
+    public float MoveSpeed = 5f;
+    public float Acceleration = 5f;
     public Vector2 MoveDirection;
     public Vector2 LastMoveDirection;
+    [SerializeField] private float currentSpeed;
     [SerializeField] private bool canMove = true;
 
     [Header("Dash")]
@@ -72,6 +73,12 @@ public class PlayerController : MonoBehaviour
 
             StartCoroutine(DisableMovement(DashTime));
             StartCoroutine(Dash(dashDir));
+
+            // animations
+            if (_hasAnimator)
+            {
+                _animator.SetTrigger(_dashHash);
+            }
         }
     }
 
@@ -88,6 +95,15 @@ public class PlayerController : MonoBehaviour
 
         // move char by rigidbody
         _rigidbody.velocity = Vector2.Lerp(_rigidbody.velocity, MoveDirection * MoveSpeed, Acceleration * Time.deltaTime);
+        currentSpeed = _rigidbody.velocity.magnitude;
+
+        // animations
+        if (_hasAnimator)
+        {
+            _animator.SetFloat(_speedHash, currentSpeed);
+            _animator.SetFloat(_speedXHash, LastMoveDirection.x);
+            _animator.SetFloat(_speedYHash, LastMoveDirection.y);
+        }
     }
 
     private void HandleFlipX()

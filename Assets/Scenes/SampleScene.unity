@@ -529,6 +529,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1369719466}
+  - component: {fileID: 1369719473}
   - component: {fileID: 1369719465}
   - component: {fileID: 1369719467}
   - component: {fileID: 1369719469}
@@ -536,7 +537,6 @@ GameObject:
   - component: {fileID: 1369719472}
   - component: {fileID: 1369719470}
   - component: {fileID: 1369719468}
-  - component: {fileID: 1369719473}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -658,14 +658,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4612c43ea1fba2c4dabc615406f282de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 6
-  Acceleration: 10
+  MoveSpeed: 5
+  Acceleration: 5
   MoveDirection: {x: 0, y: 0}
   LastMoveDirection: {x: 0, y: 0}
+  currentSpeed: 0
   canMove: 1
-  DashSpeed: 12
-  DashTime: 0.25
-  DashCooldownTime: 0.5
+  DashSpeed: 20
+  DashTime: 0.15
+  DashCooldownTime: 0.25
   canDash: 1
   _hasAnimator: 0
   _animator: {fileID: 0}
