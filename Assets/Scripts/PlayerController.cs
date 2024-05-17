@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Move")]
     public float MoveSpeed = 5f;
-    public float Acceleration = 5f;
+    public float Acceleration = 10f;
     public Vector2 MoveDirection;
     public Vector2 LastMoveDirection;
     [SerializeField] private float currentSpeed;
