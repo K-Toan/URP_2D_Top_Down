@@ -22,6 +22,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Attack",
+                    "type": "Button",
+                    "id": "54fd1ea1-357f-4877-b2a6-cb53da5ff80b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -93,12 +102,12 @@
                 },
                 {
                     "name": "",
-                    "id": "f063d2e0-1c87-41d4-aa80-49da5c4f51a5",
-                    "path": "<Mouse>/rightButton",
+                    "id": "283fe8fb-b080-4b64-8b4c-a9af6adcd421",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Dash",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

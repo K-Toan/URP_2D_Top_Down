@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     [Header("Move")]
     public float MoveSpeed = 5f;
-    public float Acceleration = 10f;
+    public float Acceleration = 15f;
     public Vector2 MoveDirection;
     public Vector2 LastMoveDirection;
     [SerializeField] private float currentSpeed;
@@ -17,6 +18,9 @@ public class PlayerController : MonoBehaviour
     public float DashTime = 0.15f;
     public float DashCooldownTime = 0.25f;
     [SerializeField] private bool canDash = true;
+
+    [Header("Attack")]
+    public float AttackDamage = 1f;
 
     [Header("Components")]
     [SerializeField] private bool _hasAnimator;
@@ -31,6 +35,7 @@ public class PlayerController : MonoBehaviour
     private int _speedXHash;
     private int _speedYHash;
     private int _dashHash;
+    private int _attackHash;
 
     private void Start()
     {
@@ -51,11 +56,13 @@ public class PlayerController : MonoBehaviour
         _speedXHash = Animator.StringToHash("SpeedX");
         _speedYHash = Animator.StringToHash("SpeedY");
         _dashHash = Animator.StringToHash("Dash");
+        _attackHash = Animator.StringToHash("Attack");
     }
 
     private void Update()
     {
         HandleDash();
+        HandleAttack();
         Move();
 
         HandleFlipX();
@@ -73,12 +80,14 @@ public class PlayerController : MonoBehaviour
 
             StartCoroutine(DisableMovement(DashTime));
             StartCoroutine(Dash(dashDir));
+        }
+    }
 
-            // animations
-            if (_hasAnimator)
-            {
-                _animator.SetTrigger(_dashHash);
-            }
+    private void HandleAttack()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            StartCoroutine(Attack());
         }
     }
 
@@ -126,8 +135,51 @@ public class PlayerController : MonoBehaviour
         canMove = true;
     }
 
+    IEnumerator Attack()
+    {
+        // debug
+        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        float currentTime = stateInfo.normalizedTime * stateInfo.length;
+        Debug.Log($"Current animation length: {currentTime}");
+
+        // start attack
+        _animator.SetBool(_attackHash, true);
+        canDash = false;
+        canMove = false;
+        _rigidbody.velocity = Vector2.zero;
+
+        yield return new WaitForSeconds(currentTime);
+
+        _animator.SetBool(_attackHash, false);
+        canDash = true;
+        canMove = true;
+    }
+
+    IEnumerator AttackBuffer()
+    {
+        // bool continueAttack = false;
+        // bool continueDash = false;
+        // if(_input.attack)
+        // {
+        //     continueAttack = true;
+        //     continueDash = false;
+        // }
+        // else if(_input.dash)
+        // {
+        //     continueAttack = false;
+        //     continueDash = true;
+        // }
+        yield return null;
+    }
+
     IEnumerator Dash(Vector2 dashDir)
     {
+        // animations
+        if (_hasAnimator)
+        {
+            _animator.SetTrigger(_dashHash);
+        }
+
         // start ghost effect
         _ghostEffect.Play(DashTime);
 
@@ -136,10 +188,13 @@ public class PlayerController : MonoBehaviour
         _rigidbody.velocity = dashDir.normalized * DashSpeed;
 
         yield return new WaitForSeconds(DashTime);
+
         _rigidbody.velocity = Vector2.zero;
 
         // dash cooldown
         yield return new WaitForSeconds(DashCooldownTime);
         canDash = true;
+
+        StartCoroutine(DisableMovement(0.5f));
     }
 }

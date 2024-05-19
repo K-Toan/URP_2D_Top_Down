@@ -6,6 +6,7 @@ public class InputController : MonoBehaviour
     [Header("Keyboard Input Values")]
     public Vector2 move;
     public bool dash;
+    public bool attack;
 
     [Header("Settings")]
     public bool cursorLocked = true;
@@ -20,6 +21,11 @@ public class InputController : MonoBehaviour
         DashInput(value.isPressed);
     }
 
+    public void OnAttack(InputValue value)
+    {
+        AttackInput(value.isPressed);
+    }
+
     public void MoveInput(Vector2 newMoveDirection)
     {
         move = newMoveDirection;
@@ -28,6 +34,11 @@ public class InputController : MonoBehaviour
     public void DashInput(bool newSprintState)
     {
         dash = newSprintState;
+    }
+
+    public void AttackInput(bool newSprintState)
+    {
+        attack = newSprintState;
     }
 
     private void OnApplicationFocus(bool hasFocus)

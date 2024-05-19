@@ -585,7 +585,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
+  m_Sprite: {fileID: -792516199, guid: 14e7b2e33e13329409690785f4b0e87b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -659,15 +659,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 5
-  Acceleration: 5
+  Acceleration: 15
   MoveDirection: {x: 0, y: 0}
   LastMoveDirection: {x: 0, y: 0}
   currentSpeed: 0
   canMove: 1
-  DashSpeed: 20
+  DashSpeed: 25
   DashTime: 0.15
   DashCooldownTime: 0.25
   canDash: 1
+  AttackDamage: 1
   _hasAnimator: 0
   _animator: {fileID: 0}
   _input: {fileID: 0}
@@ -715,6 +716,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   move: {x: 0, y: 0}
   dash: 0
+  attack: 0
   cursorLocked: 1
 --- !u!114 &1369719471
 MonoBehaviour:
