@@ -11,13 +11,13 @@ public class PlayerController : MonoBehaviour
     public Vector2 MoveDirection;
     public Vector2 LastMoveDirection;
     [SerializeField] private float currentSpeed;
-    [SerializeField] private bool canMove = true;
+    [SerializeField] private bool canMove;
 
     [Header("Dash")]
     public float DashSpeed = 20f;
     public float DashTime = 0.15f;
-    public float DashCooldownTime = 0.25f;
-    [SerializeField] private bool canDash = true;
+    public float DashCooldownTime = 1f;
+    [SerializeField] private bool canDash;
 
     [Header("Attack")]
     public float AttackDamage = 1f;
@@ -48,6 +48,9 @@ public class PlayerController : MonoBehaviour
         _ghostEffect.enabled = false;
 
         AssignAnimationHashes();
+
+        canMove = true;
+        canDash = true;
     }
 
     private void AssignAnimationHashes()
@@ -185,16 +188,17 @@ public class PlayerController : MonoBehaviour
 
         // start dash
         canDash = false;
+        canMove = false;
         _rigidbody.velocity = dashDir.normalized * DashSpeed;
-
         yield return new WaitForSeconds(DashTime);
 
+        // end dash, disable movement
         _rigidbody.velocity = Vector2.zero;
+        yield return new WaitForSeconds(0.75f);
+        // canMove = true;  
 
         // dash cooldown
         yield return new WaitForSeconds(DashCooldownTime);
         canDash = true;
-
-        StartCoroutine(DisableMovement(0.5f));
     }
 }

@@ -664,9 +664,9 @@ MonoBehaviour:
   LastMoveDirection: {x: 0, y: 0}
   currentSpeed: 0
   canMove: 1
-  DashSpeed: 25
+  DashSpeed: 20
   DashTime: 0.15
-  DashCooldownTime: 0.25
+  DashCooldownTime: 1
   canDash: 1
   AttackDamage: 1
   _hasAnimator: 0
